@@ -103,7 +103,11 @@ class Main(QMainWindow):
 
     @pyqtSlot()
     def save_barname(self):
-        self.code.setText("salam")
+        text = "کد,نام درس,استاد درس,واحد,گروه"
+        with open("out.txt", "w") as f:
+            f.write(text+"\n")
+            for i in self.lessons_barname:
+                f.write("{},{},{},{},{}".format(i.code,i.name,i.tname,i.vahed,i.group))
 
     @pyqtSlot()
     def add_lesson(self):
@@ -112,9 +116,9 @@ class Main(QMainWindow):
         vahed = self.vahed.currentIndex()
         if group == 0 or vahed == 0:
             return
-        code = self.code.text()
-        name = self.name.text()
-        tname = self.tname.text()
+        code = self.el_code.text()
+        name = self.el_name.text()
+        tname = self.el_tname.text()
         self.lessons.append(Lesson(code, name, tname, group, vahed, days))
         self.update_lesson_list()
         self.save_lessons()
